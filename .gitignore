@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Environment variables
+.env
+.env.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data files (we'll use DVC for version control)
+data/raw/*.csv
+data/raw/*.json
+data/raw/*.xlsx
+data/processed/*.csv
+data/processed/*.parquet
+data/scenarios/*.csv
+
+# Model files
+models/*.pkl
+models/*.h5
+models/*.pt
+models/*.joblib
+
+# Results
+results/*.png
+results/*.jpg
+results/*.pdf
+
+# OS
+.DS_Store
+Thumbs.db
+
+# MLflow
+mlruns/
+mlflow.db
+
+# DVC
+.dvc/tmp/
+.dvc/cache/
+
+# Logs
+*.log
+logs/

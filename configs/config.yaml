@@ -1,0 +1,63 @@
+# Project Configuration
+
+project:
+  name: "financial-stress-test-generator"
+  version: "0.1.0"
+  random_state: 42
+
+data:
+  start_date: "2000-01-01"
+  test_size: 0.15
+  validation_size: 0.15
+  
+  fred_indicators:
+    - GDP
+    - CPIAUCSL
+    - UNRATE
+    - FEDFUNDS
+    - DGS10
+    - DGS2
+  
+  companies:
+    AAPL: "Technology"
+    JPM: "Financials"
+    XOM: "Energy"
+    JNJ: "Healthcare"
+    WMT: "Consumer Staples"
+    BA: "Industrials"
+
+preprocessing:
+  handle_missing: "forward_fill"
+  scaling_method: "standard"
+  outlier_threshold: 3
+
+models:
+  scenario_generator:
+    type: "VAE"
+    latent_dim: 10
+    epochs: 100
+    batch_size: 32
+  
+  predictive:
+    type: "XGBoost"
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+  
+  anomaly_detection:
+    type: "IsolationForest"
+    contamination: 0.1
+
+evaluation:
+  metrics:
+    - "mae"
+    - "rmse"
+    - "r2_score"
+  
+  targets:
+    r2_threshold: 0.75
+    anomaly_precision: 0.80
+
+mlflow:
+  experiment_name: "financial-stress-test"
+  tracking_uri: "./mlruns"
