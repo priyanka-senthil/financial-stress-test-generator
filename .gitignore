@@ -65,6 +65,7 @@ Thumbs.db
 # MLflow
 mlruns/
 mlflow.db
+airflow.db
 
 # DVC
 .dvc/tmp/
