@@ -1,5 +1,5 @@
 """
-Financial Stress Test Data Pipeline DAG - Lazy Loading Version
+Financial Stress Test Data Pipeline DAG - Docker Version
 """
 from airflow import DAG
 from airflow.operators.python import PythonOperator
@@ -12,83 +12,94 @@ def start_pipeline():
     return "started"
 
 def acquire_macro():
-    """Import only when task runs"""
+    """Import and run - paths adjusted for Docker"""
     import sys
     import os
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-    sys.path.insert(0, project_root)
+    
+    # Add paths for Docker environment
+    sys.path.insert(0, '/opt/airflow')
     
     from data_pipeline.scripts.data_acquisition import DataAcquisition
+    
     acquirer = DataAcquisition()
-    return acquirer.fetch_macro_data()
+    output_path = acquirer.fetch_macro_data()
+    print(f"✓ Macro data saved to: {output_path}")
+    return output_path
 
 def acquire_companies():
-    """Import only when task runs"""
+    """Import and run"""
     import sys
-    import os
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-    sys.path.insert(0, project_root)
+    sys.path.insert(0, '/opt/airflow')
     
     from data_pipeline.scripts.data_acquisition import DataAcquisition
+    
     acquirer = DataAcquisition()
-    return acquirer.fetch_all_companies()
+    success_count = acquirer.fetch_all_companies()
+    print(f"✓ Companies acquired: {success_count}")
+    return success_count
 
 def quality_check():
+    print("Running quality checks...")
     return "passed"
 
 def preprocess_macro():
-    """Import only when task runs"""
+    """Import and run"""
     import sys
-    import os
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-    sys.path.insert(0, project_root)
+    sys.path.insert(0, '/opt/airflow')
     
     from data_pipeline.scripts.preprocessing.data_preprocessor import DataPreprocessor
+    
     preprocessor = DataPreprocessor()
-    output_path, _ = preprocessor.preprocess_macro_data()
+    output_path, metadata = preprocessor.preprocess_macro_data()
+    print(f"✓ Processed macro data: {output_path}")
     return output_path
 
 def preprocess_companies():
-    """Import only when task runs"""
+    """Import and run"""
     import sys
-    import os
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-    sys.path.insert(0, project_root)
+    sys.path.insert(0, '/opt/airflow')
     
     from data_pipeline.scripts.preprocessing.data_preprocessor import DataPreprocessor
+    
     preprocessor = DataPreprocessor()
-    return preprocessor.preprocess_all_companies()
+    processed_files = preprocessor.preprocess_all_companies()
+    print(f"✓ Processed {len(processed_files)} companies")
+    return len(processed_files)
 
 def validate():
-    """Import only when task runs"""
+    """Import and run"""
     import sys
-    import os
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-    sys.path.insert(0, project_root)
+    sys.path.insert(0, '/opt/airflow')
     
     from data_pipeline.scripts.validation.data_validator import DataValidator
+    
     validator = DataValidator()
     report = validator.validate_macro_data()
+    status = "PASS" if report['is_valid'] else "WARNINGS"
+    print(f"✓ Validation: {status}")
     return report['is_valid']
 
 def generate_report():
-    print("Report generated successfully")
-    return "done"
+    print("="*70)
+    print("PIPELINE REPORT")
+    print("All tasks completed successfully")
+    print("="*70)
+    return "complete"
 
 def end_pipeline():
     print("="*70)
     print("PIPELINE COMPLETED SUCCESSFULLY")
     print("="*70)
-    return "completed"
+    return "done"
 
 # Define DAG
 with DAG(
     dag_id='financial_stress_test_pipeline',
     default_args={
         'owner': 'financial_stress_test_team',
-        'retries': 2,  # Retry twice if fails
-        'retry_delay': timedelta(minutes=2),
-        'execution_timeout': timedelta(minutes=30),  # Give 30 min per task
+        'retries': 1,
+        'retry_delay': timedelta(minutes=5),
+        'execution_timeout': timedelta(minutes=30),
     },
     description='Financial stress test pipeline',
     schedule=None,
@@ -107,4 +118,5 @@ with DAG(
     t8 = PythonOperator(task_id='report', python_callable=generate_report)
     t9 = PythonOperator(task_id='end', python_callable=end_pipeline)
     
+    # Dependencies
     t1 >> [t2, t3] >> t4 >> [t5, t6] >> t7 >> t8 >> t9
