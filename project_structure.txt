@@ -1,0 +1,136 @@
+.
+├── configs
+│   └── config.yaml
+├── dashboard
+├── data
+│   ├── processed
+│   ├── raw
+│   │   ├── companies
+│   │   │   ├── AAPL_balance_sheet.csv
+│   │   │   ├── AAPL_cashflow.csv
+│   │   │   ├── AAPL_financials_annual.csv
+│   │   │   ├── AAPL_financials_quarterly.csv
+│   │   │   ├── AAPL_prices.csv
+│   │   │   ├── BA_balance_sheet.csv
+│   │   │   ├── BA_cashflow.csv
+│   │   │   ├── BA_financials_annual.csv
+│   │   │   ├── BA_financials_quarterly.csv
+│   │   │   ├── BA_prices.csv
+│   │   │   ├── JNJ_balance_sheet.csv
+│   │   │   ├── JNJ_cashflow.csv
+│   │   │   ├── JNJ_financials_annual.csv
+│   │   │   ├── JNJ_financials_quarterly.csv
+│   │   │   ├── JNJ_prices.csv
+│   │   │   ├── JPM_balance_sheet.csv
+│   │   │   ├── JPM_cashflow.csv
+│   │   │   ├── JPM_financials_annual.csv
+│   │   │   ├── JPM_financials_quarterly.csv
+│   │   │   ├── JPM_prices.csv
+│   │   │   ├── WMT_balance_sheet.csv
+│   │   │   ├── WMT_cashflow.csv
+│   │   │   ├── WMT_financials_annual.csv
+│   │   │   ├── WMT_financials_quarterly.csv
+│   │   │   ├── WMT_prices.csv
+│   │   │   ├── XOM_balance_sheet.csv
+│   │   │   ├── XOM_cashflow.csv
+│   │   │   ├── XOM_financials_annual.csv
+│   │   │   ├── XOM_financials_quarterly.csv
+│   │   │   └── XOM_prices.csv
+│   │   └── fred_macroeconomic_data.csv
+│   └── scenarios
+├── data_pipeline
+│   ├── airflow.cfg
+│   ├── airflow.db
+│   ├── airflow.db-shm
+│   ├── airflow.db-wal
+│   ├── dags
+│   │   ├── financial_stress_test_dag.py
+│   │   ├── financial_test_minimal.py
+│   │   └── test_dag.py
+│   ├── data
+│   │   ├── processed
+│   │   │   ├── companies
+│   │   │   │   ├── AAPL_processed.csv
+│   │   │   │   ├── BA_processed.csv
+│   │   │   │   ├── JNJ_processed.csv
+│   │   │   │   ├── JPM_processed.csv
+│   │   │   │   ├── WMT_processed.csv
+│   │   │   │   └── XOM_processed.csv
+│   │   │   └── macro_data_processed.csv
+│   │   ├── raw
+│   │   │   ├── companies
+│   │   │   │   ├── AAPL_balance_sheet.csv
+│   │   │   │   ├── AAPL_cashflow.csv
+│   │   │   │   ├── AAPL_financials_annual.csv
+│   │   │   │   ├── AAPL_financials_quarterly.csv
+│   │   │   │   ├── AAPL_prices.csv
+│   │   │   │   ├── BA_balance_sheet.csv
+│   │   │   │   ├── BA_cashflow.csv
+│   │   │   │   ├── BA_financials_annual.csv
+│   │   │   │   ├── BA_financials_quarterly.csv
+│   │   │   │   ├── BA_prices.csv
+│   │   │   │   ├── JNJ_balance_sheet.csv
+│   │   │   │   ├── JNJ_cashflow.csv
+│   │   │   │   ├── JNJ_financials_annual.csv
+│   │   │   │   ├── JNJ_financials_quarterly.csv
+│   │   │   │   ├── JNJ_prices.csv
+│   │   │   │   ├── JPM_balance_sheet.csv
+│   │   │   │   ├── JPM_cashflow.csv
+│   │   │   │   ├── JPM_financials_annual.csv
+│   │   │   │   ├── JPM_financials_quarterly.csv
+│   │   │   │   ├── JPM_prices.csv
+│   │   │   │   ├── WMT_balance_sheet.csv
+│   │   │   │   ├── WMT_cashflow.csv
+│   │   │   │   ├── WMT_financials_annual.csv
+│   │   │   │   ├── WMT_financials_quarterly.csv
+│   │   │   │   ├── WMT_prices.csv
+│   │   │   │   ├── XOM_balance_sheet.csv
+│   │   │   │   ├── XOM_cashflow.csv
+│   │   │   │   ├── XOM_financials_annual.csv
+│   │   │   │   ├── XOM_financials_quarterly.csv
+│   │   │   │   └── XOM_prices.csv
+│   │   │   └── fred_macroeconomic_data.csv
+│   │   ├── schemas
+│   │   │   └── macro_data_schema.json
+│   │   └── statistics
+│   │       ├── macro_data_statistics.json
+│   │       └── macro_data_validation_report.json
+│   ├── scripts
+│   │   ├── __init__.py
+│   │   ├── alerts
+│   │   │   └── __init__.py
+│   │   ├── data_acquisition.py
+│   │   ├── preprocessing
+│   │   │   ├── __init__.py
+│   │   │   └── data_preprocessor.py
+│   │   └── validation
+│   │       ├── __init__.py
+│   │       └── data_validator.py
+│   ├── simple_auth_manager_passwords.json.generated
+│   └── tests
+│       ├── integration
+│       └── unit
+├── docs
+├── models
+├── my_full_history.txt
+├── notebooks
+│   └── 01_data_exploration.ipynb
+├── project_structure.txt
+├── README.md
+├── requirements-pipeline.txt
+├── requirements.txt
+├── results
+├── src
+│   ├── __init__.py
+│   ├── data
+│   │   ├── __init__.py
+│   │   └── data_loader.py
+│   ├── evaluation
+│   │   └── __init__.py
+│   ├── models
+│   │   └── __init__.py
+│   └── visualization
+│       └── __init__.py
+└── tests
+
+34 directories, 100 files
